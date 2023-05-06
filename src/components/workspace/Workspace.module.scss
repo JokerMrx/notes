@@ -1,0 +1,25 @@
+@use "../../styles/style.scss";
+
+$width-workspace: 98%;
+$height-workspace: 100%;
+
+.container {
+  width: 100%;
+  min-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .date {
+    margin: 20px 0;
+    text-align: center;
+    color: style.$text-color;
+  }
+
+  .workspace {
+    min-width: $width-workspace;
+    max-width: $width-workspace;
+    min-height: $height-workspace;
+    padding: 20px;
+  }
+}

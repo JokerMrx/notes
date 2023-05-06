@@ -4,6 +4,7 @@ import { FiEdit } from "react-icons/fi";
 
 import SearchBox from "./components/searchbox/SearchBox";
 import Sidebar from "./components/sidebar/Sidebar";
+import Workspace from "./components/workspace/Workspace";
 import notes from './data/notes.json';
 
 import styles from "./App.module.scss";
@@ -24,6 +25,7 @@ function App() {
       </header>
       <main>
         <Sidebar notes={notes}/>
+        <Workspace note={notes[0]}/>
       </main>
     </div>
   );

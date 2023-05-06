@@ -7,7 +7,7 @@ import styles from "./ListItem.module.scss";
 const ListItem: FC<IProps> = ({ notes }) => {
   return (
     <div className={styles.notes}>
-      {notes?.map(({ title, date, message }, index) => {
+      {notes?.map(({ title, date, text }, index) => {
         return (
           <div className={styles.note} key={index}>
             <div className={styles.title}>
@@ -15,7 +15,7 @@ const ListItem: FC<IProps> = ({ notes }) => {
             </div>
             <div className={styles.info}>
               <p>{date}</p>
-              <p>{message}</p>
+              <p>{text}</p>
             </div>
           </div>
         );

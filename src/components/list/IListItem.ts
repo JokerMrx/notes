@@ -1,7 +1,7 @@
 export interface INote {
   title: string;
   date: string;
-  message: string;
+  text: string;
 }
 
 export interface IProps {
