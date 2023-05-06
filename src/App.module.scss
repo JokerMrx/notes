@@ -1,0 +1,40 @@
+$light-color: #f5f5f5;
+$gray-color: #e1dfe1;
+$dark-color: #c0bfc0;
+
+.container{
+    min-height: 100vh;
+    background-color: $light-color;
+
+    header{
+        max-height: 50px;
+        height: 50px;
+        background-color: $gray-color;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .buttons{
+            margin-left: 20px;
+            display: flex;
+            gap: 20px;
+
+            button{
+                padding: 4px 16px;
+                background-color: $light-color;
+                font-size: 18px;
+                border-radius: 4px;
+                transition: 0.3s;
+
+                &:hover{
+                    cursor: pointer;
+                    background-color: $dark-color;
+                }
+            }
+        }
+
+        .search{
+         margin-right: 20px;   
+        }
+    }
+}
