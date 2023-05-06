@@ -1,0 +1,37 @@
+@use "../../styles/style.scss";
+
+$title-color: #2e2e2e;
+$text-color: #3e3e3e;
+
+.notes{
+ width: 100%;
+ 
+ .note{
+    width: 100%;
+    max-height: 100px;
+    border-bottom: 1px solid style.$gray-color;
+    padding: 20px 0;
+
+
+    div{
+        margin-left: 30px;
+    }
+
+    .title{
+        color: $title-color;
+    }
+
+    .info{
+        color: $text-color;
+        margin-top: 8px;
+        display: flex;
+        gap: 4px;
+    }
+
+    &:hover{
+        cursor: pointer;
+        background-color: style.$gray-color;
+        transition: 0.3s;
+    }
+ }
+}

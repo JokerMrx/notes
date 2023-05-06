@@ -3,6 +3,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 
 import SearchBox from "./components/searchbox/SearchBox";
+import Sidebar from "./components/sidebar/Sidebar";
+import notes from './data/notes.json';
 
 import styles from "./App.module.scss";
 
@@ -20,6 +22,9 @@ function App() {
           <SearchBox/>
         </div>
       </header>
+      <main>
+        <Sidebar notes={notes}/>
+      </main>
     </div>
   );
 }
