@@ -1,13 +1,8 @@
 import { INote } from "../models/INote";
 
-const DB_NAME = "notes-db";
-const STORE_NAME = "notes";
-const DB_VERSION = 1;
-
 export class IndexedDB {
   DB: any;
   transaction: any;
-  // openDB: any;
   store: any;
 
   constructor() {
@@ -21,15 +16,15 @@ export class IndexedDB {
       window.IDBTransaction || (window as any).webkitIDBTransaction;
   }
 
-  createCollection() {
+  createCollection(dbName: string, storeName: string) {
     if (!this.DB) {
-      console.log("This browser doesn't support IndexedDB");
+      console.log("This browser doesn support IndexedDB");
       return;
     }
 
     console.log(this.DB);
 
-    const request = this.connectDB(DB_NAME);
+    const request = this.connectDB(dbName);
 
     request.onerror = (e: any) => {
       console.log("Error", e);
@@ -38,15 +33,14 @@ export class IndexedDB {
 
     request.onupgradeneeded = () => {
       const db = request.result;
-        console.log({db});
+      console.log({ db });
       db.onerror = () => {
         alert("Throw new Error");
         throw new Error("Failed to create object store");
       };
-      console.log('!ok');
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        console.log('!ok');
-        db.createObjectStore(STORE_NAME, {
+
+      if (!db.objectStoreNames.contains(storeName)) {
+        db.createObjectStore(storeName, {
           keyPath: "id",
         });
       }
@@ -57,25 +51,24 @@ export class IndexedDB {
     };
   }
 
-  connectDB(nameDatabase: string) {
-    return this.DB.open(nameDatabase, DB_VERSION);
+  connectDB(nameDatabase: string, dbVersion: number = 1) {
+    return this.DB.open(nameDatabase, dbVersion);
   }
 
-  saveNote(note: INote, isAdd = false) {
-    const openDB = this.connectDB(DB_NAME);
+  saveNote(dbName: string, storeName: string, note: INote) {
+    const openDB = this.connectDB(dbName);
 
     openDB.onsuccess = () => {
       const db = openDB.result;
-      const tx = db.transaction(STORE_NAME, "readwrite");
+      const tx = db.transaction(storeName, "readwrite");
 
-      const noteData = tx.objectStore(STORE_NAME);
+      const noteData = tx.objectStore(storeName);
 
       const notes = noteData.put(note);
 
       notes.onsuccess = () => {
         tx.oncomplete = () => {
           db.close();
-          isAdd && alert("Note added");
         };
       };
 
@@ -86,44 +79,43 @@ export class IndexedDB {
     };
   }
 
-  getAllNotes(register: Function) {
-    const request = this.connectDB(DB_NAME);
+  getAllNotes(dbName: string, storeName: string, register: Function) {
+    const request = this.connectDB(dbName);
 
     request.onsuccess = () => {
-        const db = request.result;
-        const tx = db.transaction(STORE_NAME, "readonly");
-        const notesData = tx.objectStore(STORE_NAME);
-        const notes = notesData.getAll();
+      const db = request.result;
+      const tx = db.transaction(storeName, "readonly");
+      const notesData = tx.objectStore(storeName);
+      const notes = notesData.getAll();
 
-        notes.onsuccess = (query: any) => {
-            register(query.srcElement.result);
-        };
+      notes.onsuccess = (query: any) => {
+        register(query.srcElement.result);
+      };
 
-        notes.onerror = () => {
-            alert("Error! Get notes.");
-        }
+      notes.onerror = () => {
+        alert("Error! Get notes.");
+      };
 
-        tx.oncomplete = () => {
-            db.close();
-        }
-    }
+      tx.oncomplete = () => {
+        db.close();
+      };
+    };
   }
 
-  deleteNote(id: string) {
-    const openDB = this.connectDB(DB_NAME);
+  deleteNote(dbName: string, storeName: string, id: string) {
+    const openDB = this.connectDB(dbName);
 
     openDB.onsuccess = () => {
       const db = openDB.result;
-      const tx = db.transaction(STORE_NAME, "readwrite");
+      const tx = db.transaction(storeName, "readwrite");
 
-      const noteData = tx.objectStore(STORE_NAME);
+      const noteData = tx.objectStore(storeName);
 
       const notes = noteData.delete(id);
 
       notes.onsuccess = () => {
         tx.oncomplete = () => {
           db.close();
-          alert("Note deleted");
         };
       };
 

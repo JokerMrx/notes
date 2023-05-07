@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context/context";
 
 import { INote } from "../../models/INote";
+import { IContext } from "../../context/IContext";
 import { getDateTime } from "../../utils/date";
 
 import styles from "./Workspace.module.scss";
@@ -9,11 +10,11 @@ import styles from "./Workspace.module.scss";
 const COUNT_SYMBOLS = 20;
 
 const Workspace = () => {
-  const { note, isEdit, setNote } = useContext(Context);
+  const { note, isEdit, setNote } = useContext(Context) as IContext;
   const [content, setContent] = useState<string>("");
 
   useEffect(() => {
-    setContent(note?.text);
+    note && setContent(note.content);
   }, [note]);
 
   console.log({ note, content });
@@ -27,7 +28,7 @@ const Workspace = () => {
 
   return (
     <div className={styles.container}>
-      <p className={styles.date}>{getDateTime(note!.date)}</p>
+      <p className={styles.date}>{note && getDateTime(note.date)}</p>
       <textarea
         className={styles.workspace}
         disabled={!isEdit}
@@ -38,7 +39,7 @@ const Workspace = () => {
             ...prev,
             title:
               content.length > COUNT_SYMBOLS ? content.slice(0, COUNT_SYMBOLS) + '...' : content,
-            text: content,
+            content,
           }))
         }
       />

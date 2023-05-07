@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Context } from "../../context/context";
 
 import { INote } from "../../models/INote";
+import { IContext } from "../../context/IContext";
 import { getDate } from "../../utils/date";
 
 import styles from "./ListItem.module.scss";
@@ -10,13 +11,9 @@ import styles from "./ListItem.module.scss";
 const COUNT_SYMBOLS = 15;
 
 const ListItem = () => {
-  const { allNotes, searchNotes, selectNote } = useContext<{
-    allNotes: Array<INote>;
-    searchNotes: Array<INote>;
-    selectNote: Function;
-  }>(Context);
+  const { allNotes, searchNotes, selectNote } = useContext(Context) as IContext;
 
-  const renderList = (arrNotes: Array<INote>) => {
+  const renderList = (arrNotes: Array<INote> | null) => {
     return arrNotes?.map((note, index) => {
       return (
         <div
@@ -29,12 +26,13 @@ const ListItem = () => {
           </div>
           <div className={styles.info}>
             <p>{getDate(note.date)}</p>
-            <p>{note.text.slice(0, COUNT_SYMBOLS)}</p>
+            <p>{note.content.slice(0, COUNT_SYMBOLS)}</p>
           </div>
         </div>
       );
     });
   };
+
   return (
     <div className={styles.notes}>{renderList(searchNotes || allNotes)}</div>
   );

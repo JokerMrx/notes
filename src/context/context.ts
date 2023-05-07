@@ -1,5 +1,5 @@
 import React from "react";
 
-// import { IContext } from "./IContext";
+import { IContext } from "./IContext";
 
-export const Context = React.createContext<any>({}); 
+export const Context = React.createContext<IContext | null>(null); 

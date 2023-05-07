@@ -13,7 +13,12 @@ import { IndexedDB } from "./utils/IndexedDB";
 
 import styles from "./App.module.scss";
 
+const DB_NAME = "notes-db";
+const STORE_NAME = "notes";
+// const DB_VERSION = 1;
+
 const DB = new IndexedDB();
+const ACTIVE_COLOR = "#c0bfc0";
 
 function App() {
   const [allNotes, setAllNotes] = useState<INote[] | null>(null);
@@ -23,87 +28,88 @@ function App() {
 
   const isDisableBtn = Boolean(!note);
 
-  // console.log({ note, allNotes, isDisableBtn, isEdit });
-
   useEffect(() => {
-    DB.createCollection();
-    DB.getAllNotes(setAllNotes);
+    DB.createCollection(DB_NAME, STORE_NAME);
+    DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
   }, []);
 
   useEffect(() => {
-    if(!note || !isEdit) return;
+    if (!note || !isEdit) return;
 
-    DB.saveNote(note, false);
-    DB.getAllNotes(setAllNotes);
+    DB.saveNote(DB_NAME, STORE_NAME, note);
+    DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
   }, [note, isEdit]);
 
   const selectNote = (_note: INote) => {
     setNote(_note);
+    setIsEdit(false);
   };
 
   const handleAddNote = () => {
-    console.log('add note');
     const dateNow = Date.now().toString();
-    DB.saveNote({
+    DB.saveNote(DB_NAME, STORE_NAME, {
       id: dateNow,
       title: "New Note",
       date: new Date().toString(),
-      text: "",
-    }, true);
-    DB.getAllNotes(setAllNotes);
+      content: "",
+    });
+    DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
   };
 
   const handleDeleteNote = () => {
     const isDelete = window.confirm("You definitely want to delete this note?");
 
-    if(isDelete && note?.id) {
-      DB.deleteNote(note.id);
-      DB.getAllNotes(setAllNotes);
+    if (isDelete && note?.id) {
+      DB.deleteNote(DB_NAME, STORE_NAME, note.id);
+      DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
     }
-  }
+  };
 
   return (
-    <Context.Provider value={{
-      note,
-      setNote,
-      isEdit,
-      setIsEdit,
-      allNotes,
-      setAllNotes,
-      selectNote,
-      searchNotes,
-      setSearchNotes
-    }}>
+    <Context.Provider
+      value={{
+        note,
+        setNote,
+        isEdit,
+        setIsEdit,
+        allNotes,
+        setAllNotes,
+        selectNote,
+        searchNotes,
+        setSearchNotes,
+      }}
+    >
       <div className={styles.container}>
-      <header>
-        <div className={styles.buttons}>
-          <button className={styles.btn} onClick={handleAddNote}>
-            <AiOutlinePlus />
-          </button>
-          <button
-            className={isDisableBtn ? styles.disabledBtn : styles.btn}
-            disabled={isDisableBtn}
-            onClick={handleDeleteNote}
-          >
-            <RiDeleteBin6Line />
-          </button>
-          <button
-            className={isDisableBtn ? styles.disabledBtn : styles.btn}
-            disabled={isDisableBtn}
-            onClick={() => setIsEdit(!isEdit)}
-          >
-            <FiEdit />
-          </button>
-        </div>
-        <div className={styles.search}>
-          <SearchBox />
-        </div>
-      </header>
-      <main>
-        <Sidebar/>
-        <Workspace/>
-      </main>
-    </div>
+        <header>
+          <div className={styles.buttons}>
+            <button className={styles.btn} onClick={handleAddNote}>
+              <AiOutlinePlus />
+            </button>
+            <button
+              className={isDisableBtn ? styles.disabledBtn : styles.btn}
+              disabled={isDisableBtn}
+              onClick={handleDeleteNote}
+            >
+              <RiDeleteBin6Line />
+            </button>
+            <button
+              className={isDisableBtn ? styles.disabledBtn : styles.btn}
+              disabled={isDisableBtn}
+              style={isEdit ? { backgroundColor: ACTIVE_COLOR } : undefined}
+              onClick={() => setIsEdit(!isEdit)}
+            >
+              <FiEdit />
+            </button>
+          </div>
+          <div className={styles.search}>
+            <SearchBox />
+          </div>
+        </header>
+        <main>
+          <Sidebar />
+          <Workspace />
+        </main>
+      </div>
     </Context.Provider>
   );
 }
