@@ -1,7 +1,12 @@
 @use "../../styles/style.scss";
 
-$width-workspace: 98%;
+$width-workspace: 95%;
 $height-workspace: 100%;
+
+.title {
+  margin-top: 30px;
+  text-align: center;
+}
 
 .container {
   width: 100%;
@@ -17,9 +22,9 @@ $height-workspace: 100%;
   }
 
   .workspace {
-    min-width: $width-workspace;
-    max-width: $width-workspace;
-    min-height: $height-workspace;
+    width: $width-workspace;
+    height: $height-workspace;
+    resize: none;
     padding: 20px;
   }
 }

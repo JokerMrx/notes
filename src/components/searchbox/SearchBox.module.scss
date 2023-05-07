@@ -20,10 +20,29 @@
     border: 0;
     text-align: center;
 
-    &:focus{
-        padding: 0 10px 0 35px;
-        background: url("../../assets/icons8-search-16.png") no-repeat scroll 10px 50%;
-        text-align: left;
+    &:focus {
+      padding: 0 10px 0 35px;
+      background: url("../../assets/icons8-search-16.png") no-repeat scroll 10px
+        50%;
+      text-align: left;
     }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .wrapper {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wrapper {
+    width: 150px;
   }
 }

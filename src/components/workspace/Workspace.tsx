@@ -23,7 +23,7 @@ const Workspace = () => {
     setContent(e.target.value);
   };
 
-  if (!note) return <h2>Select Note</h2>;
+  if (!note) return <h2 className={styles.title}>Select Note</h2>;
 
   return (
     <div className={styles.container}>

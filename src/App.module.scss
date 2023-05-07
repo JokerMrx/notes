@@ -37,7 +37,7 @@
       .disabledBtn {
         @include btn();
 
-        &:hover{
+        &:hover {
           cursor: not-allowed;
         }
       }
@@ -50,5 +50,16 @@
   main {
     display: grid;
     grid-template-columns: 1fr 3fr;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .container {
+    header {
+      .buttons {
+        margin-left: 10px;
+        gap: 8px;
+      }
+    }
   }
 }

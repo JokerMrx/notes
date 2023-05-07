@@ -14,10 +14,12 @@
     }
 
     .title {
+      font-size: 16px;
       color: style.$text-primary-color;
     }
 
     .info {
+      font-size: 14px;
       color: style.$text-color;
       margin-top: 8px;
       display: flex;
@@ -28,6 +30,58 @@
       cursor: pointer;
       background-color: style.$gray-color;
       transition: 0.3s;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .notes {
+    .note {
+      div {
+        margin-left: 10px;
+      }
+
+      .title {
+        font-size: 14px;
+      }
+
+      .info {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .notes {
+    .note {
+      div {
+        margin-left: 10px;
+      }
+
+      .title {
+        font-size: 11px;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        font-size: 9px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .notes {
+    .note {
+      .title {
+        font-size: 10px;
+      }
+
+      .info {
+        font-size: 8px;
+      }
     }
   }
 }
