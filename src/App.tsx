@@ -19,6 +19,7 @@ function App() {
   const [allNotes, setAllNotes] = useState<INote[] | null>(null);
   const [note, setNote] = useState<INote | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [searchNotes, setSearchNotes] = useState<INote[] | null>(null);
 
   const isDisableBtn = Boolean(!note);
 
@@ -68,7 +69,10 @@ function App() {
       isEdit,
       setIsEdit,
       allNotes,
-      selectNote
+      setAllNotes,
+      selectNote,
+      searchNotes,
+      setSearchNotes
     }}>
       <div className={styles.container}>
       <header>
