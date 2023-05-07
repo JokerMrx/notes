@@ -1,21 +1,32 @@
-import { FC } from "react";
+import { useContext } from "react";
 
-import { IProps } from "./IListItem";
+import { Context } from "../../context/context";
+
+import { INote } from "../../models/INote";
+import { getDate } from "../../utils/date";
 
 import styles from "./ListItem.module.scss";
 
-const ListItem: FC<IProps> = ({ notes }) => {
+const COUNT_SYMBOLS = 15;
+
+const ListItem = () => {
+  const {allNotes, selectNote} = useContext<{allNotes: Array<INote>, selectNote: Function}>(Context);
+
   return (
     <div className={styles.notes}>
-      {notes?.map(({ title, date, text }, index) => {
+      {allNotes?.map((note, index) => {
         return (
-          <div className={styles.note} key={index}>
+          <div
+            className={styles.note}
+            key={index}
+            onClick={() => selectNote(note)}
+          >
             <div className={styles.title}>
-              <h3>{title}</h3>
+              <h3>{note.title}</h3>
             </div>
             <div className={styles.info}>
-              <p>{date}</p>
-              <p>{text}</p>
+              <p>{getDate(note.date)}</p>
+              <p>{note.text.slice(0, COUNT_SYMBOLS)}</p>
             </div>
           </div>
         );

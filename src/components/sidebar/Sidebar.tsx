@@ -1,15 +1,11 @@
-import { FC } from "react"
-
-import { IProps } from "./ISidebar";
-
 import ListItem from "../list/ListItem";
 
 import styles from "./Sidebar.module.scss";
 
-const Sidebar: FC<IProps> = ({notes}) => {
+const Sidebar = () => {
   return (
     <div className={styles.container}>
-      <ListItem notes={notes}/>
+      <ListItem/>
     </div>
   )
 }

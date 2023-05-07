@@ -1,9 +1,6 @@
-export interface INote {
-  title: string;
-  date: string;
-  text: string;
-}
+import { INote } from "../../models/INote";
 
 export interface IProps {
   notes: Array<INote>;
+  selectNote: Function;
 }

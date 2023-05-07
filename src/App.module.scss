@@ -1,5 +1,13 @@
 @use "./styles/style.scss";
 
+@mixin btn() {
+  padding: 4px 16px;
+  background-color: style.$light-color;
+  font-size: 18px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
 .container {
   min-height: 100vh;
   background-color: style.$light-color;
@@ -17,16 +25,20 @@
       display: flex;
       gap: 20px;
 
-      button {
-        padding: 4px 16px;
-        background-color: style.$light-color;
-        font-size: 18px;
-        border-radius: 4px;
-        transition: 0.3s;
+      .btn {
+        @include btn();
 
         &:hover {
           cursor: pointer;
           background-color: style.$dark-color;
+        }
+      }
+
+      .disabledBtn {
+        @include btn();
+
+        &:hover{
+          cursor: not-allowed;
         }
       }
     }
