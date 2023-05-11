@@ -19,7 +19,6 @@ const SearchBox = () => {
     search 
       ? setSearchNotes(allNotes?.filter((note: any) => note.title.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1))
       : setSearchNotes(null);
-    console.log({search});
     setSearchValue(search);
   }
 

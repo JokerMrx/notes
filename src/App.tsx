@@ -15,7 +15,6 @@ import styles from "./App.module.scss";
 
 const DB_NAME = "notes-db";
 const STORE_NAME = "notes";
-// const DB_VERSION = 1;
 
 const DB = new IndexedDB();
 const ACTIVE_COLOR = "#c0bfc0";
@@ -53,9 +52,7 @@ function App() {
       date: new Date().toString(),
       content: "",
     }, setNote);
-    console.log({allNotes});
     DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
-    console.log({allNotes});
   };
 
   const handleDeleteNote = () => {
