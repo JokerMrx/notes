@@ -18,11 +18,9 @@ export class IndexedDB {
 
   createCollection(dbName: string, storeName: string) {
     if (!this.DB) {
-      console.log("This browser doesn support IndexedDB");
+      console.log("This browser doesn't support IndexedDB");
       return;
     }
-
-    console.log(this.DB);
 
     const request = this.connectDB(dbName);
 
@@ -33,7 +31,7 @@ export class IndexedDB {
 
     request.onupgradeneeded = () => {
       const db = request.result;
-      console.log({ db });
+
       db.onerror = () => {
         alert("Throw new Error");
         throw new Error("Failed to create object store");
@@ -47,7 +45,7 @@ export class IndexedDB {
     };
 
     request.onsuccess = () => {
-      console.log("Database opened successfuly");
+      // console.log("Database opened successfuly");
     };
   }
 
@@ -65,14 +63,13 @@ export class IndexedDB {
       const noteData = tx.objectStore(storeName);
 
       const notes = noteData.put(note);
-      console.log(notes);
+
       notes.onsuccess = (query: any) => {
         const idNote = query.srcElement.result
         
         const noteCreated = noteData.get(idNote);
 
         noteCreated.onsuccess = () => {
-          console.log({currentNote: noteCreated?.result});
           setNote && setNote(noteCreated?.result);
         }
 

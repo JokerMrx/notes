@@ -15,6 +15,8 @@ const ListItem = () => {
 
   const renderList = (arrNotes: Array<INote> | null) => {
     return arrNotes?.map((note, index) => {
+      const subTitle = note.content.indexOf('\n') !== -1 ? note.content.split('\n')[1]?.slice(0, COUNT_SYMBOLS) : note.content?.slice(0, COUNT_SYMBOLS);
+
       return (
         <div
           className={styles.note}
@@ -26,7 +28,7 @@ const ListItem = () => {
           </div>
           <div className={styles.info}>
             <p>{getDate(note.date)}</p>
-            <p>{note.content?.slice(0, COUNT_SYMBOLS)}</p>
+            <p>{subTitle}</p>
           </div>
         </div>
       );

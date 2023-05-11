@@ -17,14 +17,26 @@ const Workspace = () => {
     note && setContent(note.content);
   }, [note]);
 
-  console.log({ note, content });
-
   const handleChange = (e: any) => {
     if (!e.target) return;
     setContent(e.target.value);
   };
 
   if (!note) return <h2 className={styles.title}>Select Note</h2>;
+
+  const getTitle = (text: string): string => {
+    return text.length > COUNT_SYMBOLS ? text.slice(0, COUNT_SYMBOLS) + '...' : text;
+  }
+
+  let title: string = ''; 
+
+  if(content.indexOf('\n') !== -1) {
+    const copyContent = content;
+    const arrContent = copyContent.split('\n')[0];
+    title = getTitle(arrContent)
+  } else{
+    title = getTitle(content);
+  }
 
   return (
     <div className={styles.container}>
@@ -37,9 +49,8 @@ const Workspace = () => {
         onBlur={() =>
           setNote((prev: INote) => ({
             ...prev,
-            title:
-              content.length > COUNT_SYMBOLS ? content.slice(0, COUNT_SYMBOLS) + '...' : content,
-            content,
+            title,
+            content
           }))
         }
       />
