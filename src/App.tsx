@@ -52,8 +52,10 @@ function App() {
       title: "New Note",
       date: new Date().toString(),
       content: "",
-    });
+    }, setNote);
+    console.log({allNotes});
     DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
+    console.log({allNotes});
   };
 
   const handleDeleteNote = () => {
@@ -62,6 +64,7 @@ function App() {
     if (isDelete && note?.id) {
       DB.deleteNote(DB_NAME, STORE_NAME, note.id);
       DB.getAllNotes(DB_NAME, STORE_NAME, setAllNotes);
+      setNote(null);
     }
   };
 

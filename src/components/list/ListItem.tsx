@@ -26,7 +26,7 @@ const ListItem = () => {
           </div>
           <div className={styles.info}>
             <p>{getDate(note.date)}</p>
-            <p>{note.content.slice(0, COUNT_SYMBOLS)}</p>
+            <p>{note.content?.slice(0, COUNT_SYMBOLS)}</p>
           </div>
         </div>
       );

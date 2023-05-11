@@ -51,11 +51,11 @@ export class IndexedDB {
     };
   }
 
-  connectDB(nameDatabase: string, dbVersion: number = 1) {
+  private connectDB(nameDatabase: string, dbVersion: number = 1) {
     return this.DB.open(nameDatabase, dbVersion);
   }
 
-  saveNote(dbName: string, storeName: string, note: INote) {
+  saveNote(dbName: string, storeName: string, note: INote, setNote?: Function) {
     const openDB = this.connectDB(dbName);
 
     openDB.onsuccess = () => {
@@ -65,8 +65,17 @@ export class IndexedDB {
       const noteData = tx.objectStore(storeName);
 
       const notes = noteData.put(note);
+      console.log(notes);
+      notes.onsuccess = (query: any) => {
+        const idNote = query.srcElement.result
+        
+        const noteCreated = noteData.get(idNote);
 
-      notes.onsuccess = () => {
+        noteCreated.onsuccess = () => {
+          console.log({currentNote: noteCreated?.result});
+          setNote && setNote(noteCreated?.result);
+        }
+
         tx.oncomplete = () => {
           db.close();
         };
