@@ -1,0 +1,65 @@
+@use "./styles/style.scss";
+
+@mixin btn() {
+  padding: 4px 16px;
+  background-color: style.$light-color;
+  font-size: 18px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.container {
+  min-height: 100vh;
+  background-color: style.$light-color;
+
+  header {
+    max-height: 50px;
+    height: 50px;
+    background-color: style.$gray-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .buttons {
+      margin-left: 20px;
+      display: flex;
+      gap: 20px;
+
+      .btn {
+        @include btn();
+
+        &:hover {
+          cursor: pointer;
+          background-color: style.$dark-color;
+        }
+      }
+
+      .disabledBtn {
+        @include btn();
+
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .search {
+      margin-right: 20px;
+    }
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .container {
+    header {
+      .buttons {
+        margin-left: 10px;
+        gap: 8px;
+      }
+    }
+  }
+}

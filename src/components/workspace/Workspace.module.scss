@@ -1,0 +1,30 @@
+@use "../../styles/style.scss";
+
+$width-workspace: 95%;
+$height-workspace: 100%;
+
+.title {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.container {
+  width: 100%;
+  min-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .date {
+    margin: 20px 0;
+    text-align: center;
+    color: style.$text-color;
+  }
+
+  .workspace {
+    width: $width-workspace;
+    height: $height-workspace;
+    resize: none;
+    padding: 20px;
+  }
+}
